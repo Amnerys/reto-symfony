@@ -2,10 +2,11 @@
 
 namespace App\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class SupplierController
+class SupplierController extends AbstractController
 {
     /**
      * @Route("/")
@@ -21,7 +22,17 @@ class SupplierController
     /**
      * @Route("/suppliers/list-all-suppliers")
      */
-    public function showSuppliers(){
-        return new Response('Future list of suppliers');
+    public function showSuppliers($slug='Hola'){
+
+        $list = ['Yves', 'Rocher', 'Crema'];
+        return $this->render('supplier/show.html.twig', [
+            'supplier'=> ucwords(str_replace('-',' ', $slug)),
+            'list' => $list,
+        ]);
+        /*
+        return new Response(sprintf(
+            'Future list of suppliers',
+            ucwords(str_replace('-',' ', $slug))
+            ));*/
     }
 }

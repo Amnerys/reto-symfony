@@ -1,3 +1,7 @@
 #index:
     #path: /
     #controller: App\Controller\SupplierController::main
+
+#fos_user_registration_confirm:
+#  controller:App\Controller\RegistrationController::confirmAction
+#  path: /register/confirm/{token}
