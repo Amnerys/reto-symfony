@@ -19,7 +19,7 @@ class SupplierType extends AbstractType{
             ->add('phone',TextType::class,array('label'=>'Teléfono'))
             //->add('type',TextType::class,array('label'=>'Tipo de proveedor'))
             ->add('type',ChoiceType::class,array(
-                'label'=>'Activo',
+                'label'=>'Tipo de proveedor',
                 'choices'=>array(
                     'Hotel'=>'hotel',
                     'Pista'=>'pista',
