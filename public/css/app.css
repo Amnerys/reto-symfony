@@ -4,9 +4,22 @@ body {
     background: white;
 }
 
+table th,
+table td{
+    padding-right: 15px;
+    padding-top: 25px;
+    border-bottom: 2px solid #eee;
+}
 table th{
-    padding: 15px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 2px solid #ED7458;
+}
+
+table{
+    width: 100%;
+}
+
+.data-supplier{
+    color:gray;
 }
 
 input[type="text"],

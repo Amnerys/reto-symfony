@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Detalles del proveedor{% endblock %}
+
+{% block body %}
+    <style>
+        .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+        .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    </style>
+
+    <div class="example-wrapper">
+        <h2>{{ supplier.name }} - {{ supplier.type }}</h2>
+        <p class="data-supplier">
+            {{ supplier.email }}  - {{ supplier.phone }}
+        </p>
+        <p class="data-supplier"> Activo: {{ supplier.active }}</p>
+        <p class="data-supplier"> Creado el: {{ supplier.createdAt|date('d/m/Y h:m') }}</p>
+        <p class="data-supplier"> Actualizado por última vez el: {{ supplier.lastUpdated|date('d/m/Y h:m') }}</p>
+    </div>
+{% endblock %}

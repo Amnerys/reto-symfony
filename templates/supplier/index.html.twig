@@ -9,19 +9,24 @@
 </style>
 
 <div class="example-wrapper">
-    <h2>Todos los proveedores</h2>
+    <h2>Listado de proveedores</h2>
     <table>
         <tr>
             <th>Nombre del proveedor</th>
             <th>Tipo de proveedor</th>
             <th>Acciones</th>
         </tr>
+        {% for supplier in suppliers %}
+            <tr>
+                <td>{{ supplier.name }}</td>
+                <td>{{ supplier.type }}</td>
+                <td class="buttons">
+                    <a href="{{ path('supplier_detail',{'id':supplier.id}) }}">Ver</a>
+                    <a href="">Editar</a>
+                    <a href="">Borrar</a>
+                </td>
+            </tr>
+        {% endfor %}
     </table>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'E:/xampp/htdocs/symfony/reto/src/Controller/SupplierController.php'|file_link(0) }}">src/Controller/SupplierController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'E:/xampp/htdocs/symfony/reto/templates/supplier/index.html.twig'|file_link(0) }}">templates/supplier/index.html.twig</a></code></li>
-    </ul>
 </div>
 {% endblock %}

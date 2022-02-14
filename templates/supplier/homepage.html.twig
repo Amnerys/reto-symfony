@@ -7,16 +7,15 @@
             <p class="lead">Aquí prodrás acceder al listado de proveedores y crear nuevos</p>
         </div>
     </div>
+
     <div class="container">
         <div class="row mb-3">
             <div class="col-12">
-                <a href="{{ path('supplier') }}" style="width:70%;margin: 10px; padding: 8px" class="button">Crear nuevo proveedor</a>
-            </div>
-            <div class="col-12 mt-3">
-                <a href="{{ path('supplier') }}" style="width:70%; margin: 10px; padding: 8px" class="button">Listado de proveedores</a>
+                <a href="{{ path('supplier_create') }}"  >Crear nuevo proveedor</a>
+                <br>
+                <a href="{{ path('supplier') }}"  >Listado de proveedores</a>
             </div>
         </div>
-
     </div>
 {% endblock %}
 

@@ -50,9 +50,9 @@ class Supplier
     private $type;
 
     /**
-     * @var bool|null
+     * @var string|null
      *
-     * @ORM\Column(name="active", type="boolean", nullable=true)
+     * @ORM\Column(name="active", type="string", nullable=true)
      */
     private $active;
 
@@ -124,12 +124,12 @@ class Supplier
         return $this;
     }
 
-    public function getActive(): ?bool
+    public function getActive(): ?string
     {
         return $this->active;
     }
 
-    public function setActive(?bool $active): self
+    public function setActive(?string $active): self
     {
         $this->active = $active;
 
