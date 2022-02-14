@@ -80,7 +80,7 @@ class SupplierController extends AbstractController
         if($form->isSubmitted() && $form->isValid()){
             //Set current date and time
             $supplier->setLastUpdated(new \DateTime('now'));
-            //Persistance and add to the DB
+            //Load entity manager, add persistance and add supplier to the DB
             $em = $this->getDoctrine()->getManager();
             $em->persist($supplier);
             $em->flush();
@@ -92,5 +92,20 @@ class SupplierController extends AbstractController
             'edit' => true,
             'form' => $form->createView()
         ]);
+    }
+
+    /**
+     * @Route("/delete/{id}", name="supplier_delete")
+     */
+    public function delete(Supplier $supplier)
+    {
+        //Load entity manager and remove supplier
+        $em = $this->getDoctrine()->getManager();
+        //Remove from doctrine
+        $em->remove($supplier);
+        //Delete from the DB
+        $em->flush();
+
+        return $this->redirectToRoute('supplier');
     }
 }
