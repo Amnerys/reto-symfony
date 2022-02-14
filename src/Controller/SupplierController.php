@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Supplier;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -9,30 +10,47 @@ use Symfony\Component\Routing\Annotation\Route;
 class SupplierController extends AbstractController
 {
     /**
-     * @Route("/")
+     * @Route("/", name="app_homepage")
      */
-    public function main(){
-        //Returns symfony response object
+    public function home(): Response{
 
-        //TODO: Add database queries
+        $supplier_repo = $this->getDoctrine()->getRepository(Supplier::class);
+        $suppliers = $supplier_repo->findAll();
+        foreach ($suppliers as $supplier){
+            echo "<h1>{$supplier->getName()} {$supplier->getType()}</h1>";
+        }
 
-        return new  Response('Prueba');
+        return $this->render('supplier/homepage.html.twig');
+    }
+
+    #[Route('/supplier', name: 'supplier')]
+    public function index(): Response
+    {
+        //Test entities
+        /*
+        $em = $this->getDoctrine()->getManager();
+        $supplier_repo = $this->getDoctrine()->getRepository(Supplier::class);
+        $suppliers = $supplier_repo->findAll();
+
+        foreach ($suppliers as $supplier){
+            echo $supplier->getName()."</br>";
+        }*/
+
+        $supplier_repo = $this->getDoctrine()->getRepository(Supplier::class);
+        $suppliers = $supplier_repo->findAll();
+        foreach ($suppliers as $supplier){
+            echo "<h1>{$supplier->getName()} {$supplier->getType()}</h1>";
+        }
+
+        return $this->render('supplier/index.html.twig', [
+            'controller_name' => 'SupplierController',
+        ]);
     }
 
     /**
-     * @Route("/suppliers/list-all-suppliers")
+     * @Route("/create", name="supplier_create")
      */
-    public function showSuppliers($slug='Hola'){
-
-        $list = ['Yves', 'Rocher', 'Crema'];
-        return $this->render('supplier/show.html.twig', [
-            'supplier'=> ucwords(str_replace('-',' ', $slug)),
-            'list' => $list,
-        ]);
-        /*
-        return new Response(sprintf(
-            'Future list of suppliers',
-            ucwords(str_replace('-',' ', $slug))
-            ));*/
+    public function create(): Response{
+        return $this->render('supplier/create.html.twig');
     }
 }
