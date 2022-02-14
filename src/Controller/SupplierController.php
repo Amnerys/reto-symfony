@@ -15,25 +15,16 @@ class SupplierController extends AbstractController
      * @Route("/home", name="app_homepage")
      */
     public function home(): Response{
-
-        $supplier_repo = $this->getDoctrine()->getRepository(Supplier::class);
-        $suppliers = $supplier_repo->findAll();
-        foreach ($suppliers as $supplier){
-            echo "<h1>{$supplier->getName()} {$supplier->getType()}</h1>";
-        }
-
+        //We'll get the homepage view
         return $this->render('supplier/homepage.html.twig');
     }
 
     #[Route('/supplier', name: 'supplier')]
-    public function index(): Response
-    {
-
-        //$em = $this->getDoctrine()->getManager();
+    public function index(): Response{
+        //We'll get the list of suppliers here by descending order
         $supplier_repo = $this->getDoctrine()->getRepository(Supplier::class);
         $suppliers = $supplier_repo->findBy([],['id'=>'DESC']);
         return $this->render('supplier/index.html.twig', [
-            //'controller_name' => 'SupplierController',
             'suppliers'=>$suppliers
         ]);
     }
@@ -42,15 +33,25 @@ class SupplierController extends AbstractController
      * @Route("/create", name="supplier_create")
      */
     public function create(Request $request){
-        echo "Hola aquí creo";
+        //Create new supplier
         $supplier = new Supplier();
+        //Use the form type for supplier and the supplier object
         $form = $this->createForm(SupplierType::class, $supplier);
 
         $form->handleRequest($request);
-        if($form->isSubmitted()){
-            //$supplier->
+        //Check if the user has completed the form and is valid
+        if($form->isSubmitted() && $form->isValid()){
+            //Set current date and time
+            $supplier->setCreatedAt(new \DateTime('now'));
+            $supplier->setLastUpdated(new \DateTime('now'));
+            //Persistance and add to the DB
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($supplier);
+            $em->flush();
+            //Return us to the newly created supplier detail view
+            return $this->redirect($this->generateUrl('supplier_detail',['id'=>$supplier->getId()]));
         }
-
+        //Set view
         return $this->render('supplier/create.html.twig',[
             'form'=>$form->createView()
         ]);
@@ -60,9 +61,36 @@ class SupplierController extends AbstractController
      * @Route("/detail/{id}", name="supplier_detail")
      */
     public function detail(Supplier $supplier){
-
+        //This will get the detail view for the wild card 'id' for the supplier
         return $this->render('supplier/detail.html.twig',[
             'supplier'=>$supplier
+        ]);
+    }
+
+    /**
+     * @Route("/edit/{id}", name="supplier_edit")
+     */
+    public function edit(Request $request, Supplier $supplier){
+
+        //Use the form type for supplier and the supplier object
+        $form = $this->createForm(SupplierType::class, $supplier);
+
+        $form->handleRequest($request);
+        //Check if the user has completed the form and is valid
+        if($form->isSubmitted() && $form->isValid()){
+            //Set current date and time
+            $supplier->setLastUpdated(new \DateTime('now'));
+            //Persistance and add to the DB
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($supplier);
+            $em->flush();
+            //Return us to the newly created supplier detail view
+            return $this->redirect($this->generateUrl('supplier_detail',['id'=>$supplier->getId()]));
+        }
+
+        return $this->render('supplier/create.html.twig',[
+            'edit' => true,
+            'form' => $form->createView()
         ]);
     }
 }

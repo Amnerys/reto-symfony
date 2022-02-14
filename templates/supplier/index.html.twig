@@ -22,7 +22,7 @@
                 <td>{{ supplier.type }}</td>
                 <td class="buttons">
                     <a href="{{ path('supplier_detail',{'id':supplier.id}) }}">Ver</a>
-                    <a href="">Editar</a>
+                    <a href="{{ path('supplier_edit',{'id':supplier.id}) }}">Editar</a>
                     <a href="">Borrar</a>
                 </td>
             </tr>
